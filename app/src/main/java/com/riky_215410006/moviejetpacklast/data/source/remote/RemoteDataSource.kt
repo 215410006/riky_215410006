@@ -15,6 +15,7 @@ import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val movieApiService: ApiService) {
 
+    // Mendapatkan daftar film populer dari layanan web.
     fun getPopularMovies(): LiveData<ApiResponse<List<MovieResponse>>> {
         EspressoIdlingResource.increment()
         val resultMovieResponse = MutableLiveData<ApiResponse<List<MovieResponse>>>()
@@ -36,6 +37,7 @@ class RemoteDataSource @Inject constructor(private val movieApiService: ApiServi
         return resultMovieResponse
     }
 
+    // Mendapatkan daftar acara TV populer dari layanan web.
     fun getPopularTv(): LiveData<ApiResponse<List<TvResponse>>> {
         EspressoIdlingResource.increment()
         val resultTvResponse = MutableLiveData<ApiResponse<List<TvResponse>>>()
@@ -56,5 +58,4 @@ class RemoteDataSource @Inject constructor(private val movieApiService: ApiServi
         EspressoIdlingResource.decrement()
         return resultTvResponse
     }
-
 }
