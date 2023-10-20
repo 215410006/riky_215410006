@@ -25,18 +25,24 @@ class FavoriteFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite, container, false)
+        // Menggembalikan tampilan (layout) fragment
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         context?.let { setupViewPager(it) }
+        // Setelah aktivitas terhubung, atur ViewPager
         viewModel = ViewModelProvider(this@FavoriteFragment, factory)[FavoriteViewModel::class.java]
+        // Inisialisasi ViewModel menggunakan ViewModelProvider dan ViewModelFactory
     }
 
     private fun setupViewPager(context: Context) {
         val sectionsPagerAdapter = SectionsPagerAdapter(context, childFragmentManager)
+        // Membuat adapter untuk ViewPager
         favorite_view_pager.adapter = sectionsPagerAdapter
+        // Mengatur adapter ViewPager
         favorite_tab_layout.setupWithViewPager(favorite_view_pager)
+        // Menghubungkan TabLayout dengan ViewPager
     }
 
 }
