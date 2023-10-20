@@ -7,9 +7,11 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FavoriteFragmentBuildersModule {
+    // Mendefinisikan metode untuk memberikan dependensi dan mengonfigurasi FavoriteMovieFragment
     @ContributesAndroidInjector
     abstract fun contributeFavoriteMovieFragment(): FavoriteMovieFragment
 
+    // Mendefinisikan metode untuk memberikan dependensi dan mengonfigurasi FavoriteTvFragment
     @ContributesAndroidInjector
     abstract fun contributeFavoriteTvFragment(): FavoriteTvFragment
 }
