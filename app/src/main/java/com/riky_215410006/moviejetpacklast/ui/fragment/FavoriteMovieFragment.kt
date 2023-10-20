@@ -33,17 +33,20 @@ class FavoriteMovieFragment : DaggerFragment(), MovieCallback {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_favorite_movie, container, false)
+        // Menggembalikan tampilan (layout) fragment
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
+        // Set up RecyclerView untuk menampilkan daftar film favorit
 
         parentFragment?.let {
             viewModel = ViewModelProvider(it, factory)[FavoriteViewModel::class.java]
         }
+        // Menginisialisasi ViewModel dengan ViewModelProvider dan ViewModelFactory dari parentFragment
         observeFavoriteMovies()
-
+        // Memulai pengamatan (observasi) perubahan dalam daftar film favorit
     }
 
     private fun observeFavoriteMovies() {
@@ -65,12 +68,15 @@ class FavoriteMovieFragment : DaggerFragment(), MovieCallback {
                 }
             }
         })
+        // Mengamati perubahan dalam daftar film favorit dan memperbarui RecyclerView sesuai dengan perubahan tersebut
     }
+
     private fun setupRecyclerView() {
         rv_favorite_movie.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = MovieAdapter(this@FavoriteMovieFragment)
         }
+        // Menyiapkan RecyclerView untuk menampilkan daftar film
     }
 
     private fun enableEmptyStateEmptyFavoriteMovie() {
@@ -78,6 +84,7 @@ class FavoriteMovieFragment : DaggerFragment(), MovieCallback {
         desc_empty.text =
             resources.getString(R.string.belum_ada_list)
         favorite_movie_empty_state.visibility = View.VISIBLE
+        // Mengaktifkan tampilan kosong jika tidak ada film favorit yang tersedia
     }
 
     override fun onItemClicked(data: MovieEntity) {
@@ -89,6 +96,6 @@ class FavoriteMovieFragment : DaggerFragment(), MovieCallback {
                 .putExtra(DetailActivity.EXTRA_DATA, data.movieId)
                 .putExtra(DetailActivity.EXTRA_TYPE, StringConst.TYPE_MOVIE)
         )
+        // Menangani klik pada item film dan membuka DetailActivity untuk menampilkan detailnya
     }
-
 }
