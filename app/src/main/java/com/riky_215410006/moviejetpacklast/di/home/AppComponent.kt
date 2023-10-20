@@ -17,13 +17,19 @@ import javax.inject.Singleton
         NetworkModule::class
     ]
 )
-interface AppComponent : AndroidInjector<BaseApplication>{
+interface AppComponent : AndroidInjector<BaseApplication> {
+
+    // Antarmuka AppComponent adalah AndroidInjector untuk BaseApplication, yang merupakan entri titik aplikasi
 
     @Component.Builder
-    interface Builder{
+    interface Builder {
+
+        // Antarmuka Builder digunakan untuk mengonfigurasi komponen AppComponent
 
         @BindsInstance
         fun application(application: Application): Builder
+
+        // Metode ini mengikat instance aplikasi (Application) yang akan digunakan dalam komponen
 
         fun build(): AppComponent
     }
