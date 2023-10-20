@@ -10,14 +10,15 @@ import retrofit2.http.Query
 
 interface ApiService {
 
+    // Menggunakan Retrofit, kita mendefinisikan endpoint untuk mengambil daftar film yang sedang diputar.
     @GET("movie/now_playing")
     fun getPopularMovies(
         @Query("api_key") apiKey: String = BuildConfig.MOVDB_API_KEY
     ) : Call<ListResponse<MovieResponse>>
 
+    // Endpoint untuk mengambil daftar acara TV yang sedang tayang.
     @GET("tv/on_the_air")
     fun getPopularTv(
         @Query("api_key") apiKey: String = BuildConfig.MOVDB_API_KEY
     ) : Call<ListResponse<TvResponse>>
-
 }
