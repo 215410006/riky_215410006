@@ -9,8 +9,11 @@ import com.riky_215410006.moviejetpacklast.data.source.entity.TvEntity
 import javax.inject.Inject
 
 class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRepository) : ViewModel() {
+    // Konstruktor yang mengambil movieRepository sebagai dependensi melalui dependency injection
 
     fun getListFavoriteMovie(): LiveData<PagedList<MovieEntity>> = movieRepository.getListPopularMovies()
+    // Fungsi ini mengembalikan LiveData yang berisi daftar film favorit dari repository
 
     fun getListFavoriteTv(): LiveData<PagedList<TvEntity>> = movieRepository.getListPopularTv()
+    // Fungsi ini mengembalikan LiveData yang berisi daftar acara TV favorit dari repository
 }
