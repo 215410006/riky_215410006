@@ -24,11 +24,14 @@ import javax.inject.Inject
 
 
 class MovieFragment : DaggerFragment(), MovieCallback {
+    // Kelas MovieFragment yang mewarisi DaggerFragment dan mengimplementasikan MovieCallback
 
     private lateinit var viewModel: HomeViewModel
+    // Properti untuk mengakses ViewModel
 
     @Inject
     lateinit var factory: ViewModelFactory
+    // Properti untuk mengakses ViewModelFactory melalui Dependency Injection
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,19 +39,24 @@ class MovieFragment : DaggerFragment(), MovieCallback {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie, container, false)
+        // Menggembalikan tampilan (layout) fragment
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
+        // Memanggil metode setupRecyclerView() untuk menyiapkan RecyclerView
 
         activity?.let { setupViewModel(it) }
-        observeListMovies()
+        // Menginisialisasi ViewModel dengan metode setupViewModel()
 
+        observeListMovies()
+        // Memulai pengamatan (observasi) perubahan dalam daftar film populer
     }
 
     private fun setupViewModel(fragmentActivity: FragmentActivity) {
         viewModel = ViewModelProvider(fragmentActivity, factory)[HomeViewModel::class.java]
+        // Menginisialisasi ViewModel menggunakan ViewModelProvider dan ViewModelFactory
     }
 
     private fun observeListMovies() {
@@ -56,20 +64,29 @@ class MovieFragment : DaggerFragment(), MovieCallback {
             if (listMovie != null) {
                 when (listMovie.status) {
                     Status.LOADING -> progress_bar.visibility = View.VISIBLE
+                    // Saat data sedang dimuat, tampilkan indikator loading.
+
                     Status.SUCCESS -> {
                         progress_bar.visibility = View.GONE
+                        // Saat data berhasil dimuat, sembunyikan indikator loading.
+
                         rv_movie.adapter?.let { adapter ->
                             when (adapter) {
                                 is MovieAdapter -> {
                                     adapter.submitList(listMovie.data)
                                     adapter.notifyDataSetChanged()
+                                    // Perbarui daftar film pada adapter dengan data baru.
                                 }
                             }
                         }
                     }
+
                     Status.ERROR -> {
                         progress_bar.visibility = View.GONE
+                        // Jika terjadi kesalahan, sembunyikan indikator loading.
+
                         Toast.makeText(context, "Check your internet connection", Toast.LENGTH_SHORT).show()
+                        // Tampilkan pesan kesalahan kepada pengguna.
                     }
                 }
             }
@@ -80,6 +97,7 @@ class MovieFragment : DaggerFragment(), MovieCallback {
         rv_movie.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = MovieAdapter(this@MovieFragment)
+            // Mengatur RecyclerView dengan adapter MovieAdapter dan layoutManager LinearLayoutManager.
         }
     }
 
@@ -92,6 +110,6 @@ class MovieFragment : DaggerFragment(), MovieCallback {
                 .putExtra(DetailActivity.EXTRA_DATA, data.movieId)
                 .putExtra(DetailActivity.EXTRA_TYPE, TYPE_MOVIE)
         )
+        // Menangani klik pada item daftar film dan membuka DetailActivity untuk menampilkan detail film yang dipilih.
     }
-
 }
