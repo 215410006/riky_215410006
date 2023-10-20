@@ -32,17 +32,20 @@ class FavoriteTvFragment : DaggerFragment(), TvCallback {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_favorite_tv, container, false)
+        // Menggembalikan tampilan (layout) fragment
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
+        // Set up RecyclerView untuk menampilkan daftar acara TV favorit
 
         parentFragment?.let {
             viewModel = ViewModelProvider(it, factory)[FavoriteViewModel::class.java]
         }
+        // Menginisialisasi ViewModel dengan ViewModelProvider dan ViewModelFactory dari parentFragment
         observeFavoriteTvShow()
-
+        // Memulai pengamatan (observasi) perubahan dalam daftar acara TV favorit
     }
 
     private fun observeFavoriteTvShow() {
@@ -64,6 +67,7 @@ class FavoriteTvFragment : DaggerFragment(), TvCallback {
                 }
             }
         })
+        // Mengamati perubahan dalam daftar acara TV favorit dan memperbarui RecyclerView sesuai dengan perubahan tersebut
     }
 
     private fun setupRecyclerView() {
@@ -71,12 +75,14 @@ class FavoriteTvFragment : DaggerFragment(), TvCallback {
             layoutManager = LinearLayoutManager(context)
             adapter = TvAdapter(this@FavoriteTvFragment)
         }
+        // Menyiapkan RecyclerView untuk menampilkan daftar acara TV
     }
 
     private fun enableEmptyStateEmptyFavoriteTvShow() {
         empty.text = resources.getString(R.string.fav_list)
-        desc_empty.text =resources.getString(R.string.belum_ada_list)
+        desc_empty.text = resources.getString(R.string.belum_ada_list)
         favorite_tvshow_empty_state.visibility = View.VISIBLE
+        // Mengaktifkan tampilan kosong jika tidak ada acara TV favorit yang tersedia
     }
 
     override fun onItemClicked(data: TvEntity) {
@@ -88,6 +94,6 @@ class FavoriteTvFragment : DaggerFragment(), TvCallback {
                 .putExtra(DetailActivity.EXTRA_DATA, data.tvShowId)
                 .putExtra(DetailActivity.EXTRA_TYPE, StringConst.TYPE_TVSHOW)
         )
+        // Menangani klik pada item acara TV dan membuka DetailActivity untuk menampilkan detailnya
     }
-
 }
